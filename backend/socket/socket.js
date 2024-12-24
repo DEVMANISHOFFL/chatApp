@@ -19,20 +19,27 @@ export const getReceiverSocketId = (receiverId) => {
 const userSocketMap = {}; // {userId->socketId}
 
 
-io.on('connection', (socket)=>{
-    const userId = socket.handshake.query.userId
-    if(userId !== undefined){
+io.on('connection', (socket) => {
+    const userId = socket.handshake.query.userId;
+    
+    if (userId) {
         userSocketMap[userId] = socket.id;
-    } 
+    } else {
+        console.error('UserId is not provided');
+    }
 
-    io.emit('getOnlineUsers',Object.keys(userSocketMap));
+    io.emit('getOnlineUsers', Object.keys(userSocketMap));
 
-    socket.on('disconnect', ()=>{
-        delete userSocketMap[userId];
-        io.emit('getOnlineUsers',Object.keys(userSocketMap));
-    })
+    socket.on('disconnect', () => {
+        if (userId) {
+            delete userSocketMap[userId];
+            io.emit('getOnlineUsers', Object.keys(userSocketMap));
+        } else {
+            console.error('UserId not found on disconnect');
+        }
+    });
+});
 
-})
 
 export {app, io, server};
 

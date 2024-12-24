@@ -6,7 +6,7 @@ const connectDB = async () => {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             serverSelectionTimeoutMS: 5000,  // Reduce connection time
-            socketTimeoutMS: 45000          // Increase socket timeout
+            socketTimeoutMS: 45000          // Increase socket timeout  
         });
         console.log('MongoDB connected');
     } catch (err) {
@@ -16,3 +16,4 @@ const connectDB = async () => {
 };
 
 export default connectDB;
+ //MIC VC GROUP STSTUS 

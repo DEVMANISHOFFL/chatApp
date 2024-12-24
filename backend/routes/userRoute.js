@@ -4,9 +4,16 @@ import isAuthenticated from "../middleware/isAuthenticated.js";
 
 const router = express.Router();
 
+// Register route
 router.route("/register").post(register);
+
+// Login route
 router.route("/login").post(login);
-router.route("/logout").get(logout);
-router.route("/").get(isAuthenticated,getOtherUsers);
+
+// Logout route (change to POST for better consistency with action-based routes)
+router.route("/logout").post(logout); 
+
+// Get other users, only accessible if authenticated
+router.route("/").get(isAuthenticated, getOtherUsers);
 
 export default router;
